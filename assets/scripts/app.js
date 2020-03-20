@@ -1,5 +1,6 @@
 const defaultResult = 0;
 let currentResult = defaultResult;
+let logEntries = []; //empty array initialization
 
 //Gets input from input field and convert it to an actual number
 function getUserNumberInput(){
@@ -12,11 +13,23 @@ function createAndWriteOutput(resultBeforeCalc, operator,calcNumber){
     outputResult(currentResult,calcDescription); //from vendor.js
 }
 
+function writeToLog(operationIdentifier,prevResult,operationNumber,newResult){
+        const logEntry = {
+            operation:  operationIdentifier,
+            prevResult: prevResult,
+            number: operationNumber,
+            result: newResult
+        }; //object for one logEntry
+        logEntries.push(logEntry);
+        console.log(logEntries);
+    }
+
 function add(){
     const enteredNumber = getUserNumberInput();
     const initialResult = currentResult; //currentResult still needs to be displayed for the calculation output
     currentResult += enteredNumber; 
     createAndWriteOutput(initialResult,'+',enteredNumber);
+    writeToLog('ADD',initialResult,enteredNumber,currentResult);
 }
 
 function subtract(){
@@ -24,6 +37,7 @@ function subtract(){
     const initialResult = currentResult;
     currentResult -= enteredNumber; 
     createAndWriteOutput(initialResult,'-',enteredNumber);
+    writeToLog('SUBTRACT',initialResult,enteredNumber,currentResult);
 }
 
 function multiply(){
@@ -31,6 +45,7 @@ function multiply(){
     const initialResult = currentResult;
     currentResult *= enteredNumber; 
     createAndWriteOutput(initialResult,'*',enteredNumber);
+    writeToLog('MULTIPLY',initialResult,enteredNumber,currentResult);
 }
 
 function divide(){
@@ -38,6 +53,7 @@ function divide(){
     const initialResult = currentResult;
     currentResult /= enteredNumber; 
     createAndWriteOutput(initialResult,'/',enteredNumber);
+    writeToLog('DIVIDE',initialResult,enteredNumber,currentResult);
 }    
 
 addBtn.addEventListener('click',add);
@@ -46,7 +62,6 @@ addBtn.addEventListener('click',add);
     //don't execute the function right away, execute when the button is clicked
     //browser can execute the function by this
     //providign the address of the function
-
 subtractBtn.addEventListener('click',subtract);
 multiplyBtn.addEventListener('click',multiply);
 divideBtn.addEventListener('click',divide);
